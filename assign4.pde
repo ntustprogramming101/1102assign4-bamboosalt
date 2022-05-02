@@ -348,7 +348,8 @@ for(int i = 0; i < cabbageX.length; i++){
     
 			// HINT:
 			// You can use playerCol and playerRow to get which soil player is currently on
-if((playerRow + 1 < SOIL_ROW_COUNT && soilHealth[playerCol][playerRow + 1] == 0) || playerRow + 1 >= SOIL_ROW_COUNT){
+if(playerRow  < SOIL_ROW_COUNT -1 ){
+  if(soilHealth[playerCol][playerRow + 1] == 0){
   
 			// Check if "player is NOT at the bottom AND the soil under the player is empty"
 			// > If so, then force moving down by setting playerMoveDirection and playerMoveTimer (see downState part below for example)
@@ -356,8 +357,10 @@ if((playerRow + 1 < SOIL_ROW_COUNT && soilHealth[playerCol][playerRow + 1] == 0)
 	playerMoveDirection = DOWN ;
       playerMoveTimer = playerMoveDuration;
 }
+}
+
       // > Else then determine player's action based on input state
-else{	
+	
       
       if(leftState){
 
@@ -408,21 +411,21 @@ if(playerRow >= 0 && soilHealth[playerCol + 1][playerRow] > 0){
 				// We have already checked "player is NOT at the bottom AND the soil under the player is empty",
 				// and since we can only get here when the above statement is false,
 				// we only have to check again if "player is NOT at the bottom" to make sure there won't be out-of-bound exception
-				if(playerRow < SOIL_ROW_COUNT - 1&& soilHealth[playerCol ][playerRow+ 1] > 0){
+				if(playerRow < SOIL_ROW_COUNT - 1){
+          if(soilHealth[playerCol ][playerRow+ 1] > 0){
             soilHealth[playerCol][playerRow + 1] --;
-          }else{
+          }
+          }
 					// > If so, dig it and decrease its health
 
 					// For requirement #3:
 					// Note that player never needs to move down as it will always fall automatically,
 					// so the following 2 lines can be removed once you finish requirement #3
 
-					playerMoveDirection = DOWN;
-					playerMoveTimer = playerMoveDuration;
-          }
+					
 }
 				}
-			}
+			
 
 		// If player is now moving?
 		// (Separated if-else so player can actually move as soon as an action starts)
@@ -461,10 +464,7 @@ if(playerRow >= 0 && soilHealth[playerCol + 1][playerRow] > 0){
 				}else{
 					playerY = (1f - float(playerMoveTimer) / playerMoveDuration + playerRow) * SOIL_SIZE;
 				}
-if(playerY >= 23*80){
-  playerY = 23*80;
-  
-}
+
 				break;
 			}
 
